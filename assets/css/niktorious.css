@@ -1,0 +1,76 @@
+/*!
+ * niktorious.css
+ *
+ * Place any changes to Bootstrap stuff here
+ *
+ * Copyright 2013 blah blah blah niktorious
+ */
+
+
+/* Add background image to hero unit */
+.hero-unit {
+  background-image: url("../img/hero.jpg");
+  background-repeat: no-repeat;
+}
+
+
+/* Change the colour of the navbar */
+.navbar-inverse .navbar-inner {
+  background-color: #A4A4A4;
+  background-image: -moz-linear-gradient(top, #BDBDBD, #A4A4A4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#BDBDBD), to(#A4A4A4));
+  background-image: -webkit-linear-gradient(top, #BDBDBD, #A4A4A4);
+  background-image: -o-linear-gradient(top, #BDBDBD, #A4A4A4);
+  background-image: linear-gradient(to bottom, #BDBDBD, #A4A4A4);
+  background-repeat: repeat-x;
+  border-color: #A4A4A4;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BDBDBD', endColorstr='#A4A4A4', GradientType=0);
+}
+
+/* Change the colour of the navbar brand and text */
+.navbar-inverse .brand,
+.navbar-inverse .nav > li > a {
+  color: #2E2E2E;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.navbar-inverse .brand:hover,
+.navbar-inverse .nav > li > a:hover,
+.navbar-inverse .brand:focus,
+.navbar-inverse .nav > li > a:focus {
+  color: #000000;
+}
+
+.navbar-inverse .nav .active > a,
+.navbar-inverse .nav .active > a:hover,
+.navbar-inverse .nav .active > a:focus {
+  color: #000000;
+  background-color: #A4A4A4;
+}
+
+/* Change the colour of the dropdown */
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle,
+.navbar-inverse .nav li.dropdown.active > .dropdown-toggle,
+.navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
+  color: #000000;
+  background-color: #A4A4A4;
+}
+
+/* Change the colour of the dropdown glyph */
+.navbar-inverse .nav li.dropdown > a:hover .caret,
+.navbar-inverse .nav li.dropdown > a:focus .caret {
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+}
+
+.navbar-inverse .nav li.dropdown > .dropdown-toggle .caret {
+  border-top-color: #2E2E2E;
+  border-bottom-color: #2E2E2E;
+}
+
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar-inverse .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+}
