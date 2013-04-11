@@ -1,0 +1,59 @@
+website notes
+
+TODO
+-don't forget about navbar colours when shrinking!!
+-favicon
+
+////////////////////////////////////////////////////////
+// bootstrap:
+-easy to download
+-
+
+////////////////////////////////////////////////////////
+// customizing bootstrap:
+-DO NOT make specific changes in bootstrap.css
+-create a new css file, niktorious.css
+
+
+/* Add background image to hero unit */
+.hero-unit {
+  background-image: url("../img/hero.jpg");
+  background-repeat: no-repeat;
+}
+
+-advantages: if bootstrap gets updated, all you need to do is update your bootstrap files
+	-you don't need to move all your specific changes into the new bootstrap files
+
+-a useful tool for customizing: http://www.colorzilla.com/gradient-editor/
+-use this to help with your navbar
+
+////////////////////////////////////////////////////////
+// putty:
+-using putty to transfer files to web server
+-adding putty to PATH
+-pscp
+pscp *.js niktorio@server7.websitehostserver.net:www/assets/js/
+
+////////////////////////////////////////////////////////
+// write an update script:
+start Pageant
+-this is putty's SSH authentication agent
+-holds private keys in memory so you don't need to keep typing in your password
+
+(the problem here is that you need to add your keys, and type in your password, before you start working)
+
+use PuTTYgen to create your 
+
+for information on other types of keys and ssh2
+http://the.earth.li/~sgtatham/putty/0.52/htmldoc/Chapter8.html
+
+/////////////////////////////////////////////////////////
+// customizing bash prompt:
+$ echo $PS1
+\s-\v\$
+
+$ PS1="\w$"
+OR
+$ PS1="\u@\w"
+\u: current user
+\w: working directory
