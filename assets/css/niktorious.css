@@ -77,6 +77,10 @@
 
 /* Non bootstrap things go below here */
 
+.bg-grey {
+  background-color: #F2F2F2
+}
+
 .img-intro {
   -webkit-border-radius: 10px;
      -moz-border-radius: 10px;
@@ -87,4 +91,57 @@
 
 .text-tab {
   text-indent: 30px;
+}
+
+.resume-divider {
+  width: 100%;
+  border-color: #000000;
+}
+
+.resume-header {
+  background-color: #C0C0C0;
+  padding: 10px;
+}
+
+.resume-job {
+  background-color: #E0E0E0;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.large {
+  font-size: 1.15em;
+  font-weight: bold;
+}
+
+.job-title {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 0;
+}
+
+.indent {
+  position: relative;
+  padding-left: 25px;
+}
+
+.header {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centre {
+  text-align: center;
+}
+
+#content a {
+  color: #666666;
+  text-decoration: none;
+  border-bottom: 1px #666666 dotted;
+}
+
+#content a:hover {
+  color: #999999;
+  text-decoration: none;
+  border-bottom: none;
 }
