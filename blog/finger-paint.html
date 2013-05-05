@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Finger Paint</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap stuff -->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Google prettify-->
+    <link href="../assets/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Overriding stuff -->
+    <link href="../assets/css/niktorious.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+
+  <body class=bg-grey>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="../index.html">Niktorious</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="../about.html">About Me</a></li>
+              <li><a href="../resume.html">Résumé</a></li>
+              <li class="dropdown active">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li class="nav-header">Android</li>
+                  <li><a href="#">Alarmix</a></li>
+                  <li><a href="">Finger Paint</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Blog</li>
+                  <li><a href="gopro-head-harness.html">DIY: GoPro Head Harness</a></li>
+                  <li><a href="index.html">More...</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="content">
+
+      <p>Posted on May 5, 2013</p>
+
+      <div class="span8">
+        <img class="img-intro" src="../assets/img/finger_paint_icon.png" align="left" />
+        <h1>Finger Paint</h1>
+      </div>
+
+      <div class="span8">
+        <h2>A Learning Project</h2>
+        <p class="text-tab">I created <a href="https://github.com/nikt/Finger-Paint">this simple Android app</a> a long time ago in an attempt to teach myself about Android development. It is a very naive implementation of a finger painting application. It is possible to pick paint colours, stroke widths, and background canvases. Aside from solid colours, the user can also choose a picture on the phone to use as the background instead. There are quite a few things that I learned about, including a number of things I learned <i>not</i> to do.
+        </p>
+      </div>
+
+      <div class="span8">
+        <h2>The Basics</h2>
+        <p class="text-tab">Looking back on my old code now, it's cringe-worthy looking at some of the things that I wrote. I'll go over some the things that I would change a little later. First I want to talk about the drawing method that I used.
+        </p>
+        <p class="text-tab">The way that the app paints is quite simple. When the user touches the screen, the app records a <code>Point</code>. When the user moves a finger along the screen, the app records the new point (a <code>FriendlyPoint</code> in this case), and connects it to the previous point. Fairly straightforward.
+        </p>
+        <p class="text-tab">The <code>Point</code> class looks something like this:</p>
+        <pre class="lang-java prettyprint">
+public class Point {
+  public final float x, y;
+  public final int col;
+  public final int width;
+  
+  public Point(final float x, final float y, final int col, final int width) {
+    this.x = x;
+    this.y = y;
+    this.col = col;
+    this.width = width;
+  }
+  
+  public void draw(final Canvas canvas, final Paint paint) {
+    paint.setColor(col);
+    canvas.drawCircle(x, y, width/2, paint);
+  }
+}</pre>
+      <p class="text-tab">And the <code>FriendlyPoint</code> class looks something like this:</p>
+      <pre class="lang-java prettyprint">
+public class FriendlyPoint extends Point {
+  private final Point neighbour;
+  
+  public FriendlyPoint(final float x, final float y, final int col, final Point neighbour, final int width) {
+    super(x, y, col, width);
+    this.neighbour = neighbour;
+  }
+  
+  @Override
+  public void draw(final Canvas canvas, final Paint paint) {
+    paint.setColor(col);
+    paint.setStrokeWidth(width);
+    canvas.drawLine(x, y, neighbour.x, neighbour.y, paint);
+    canvas.drawCircle(x, y, width/2, paint);
+  }
+}</pre>
+      </div>
+
+      <div class="span8">
+        <p class="text-tab">When I had originally written the drawing code, I just drew a line between to joined points. When the user selected a width greater than 1px, the image would end up drawing two lines that didn't quite match up. The result was never very pleasing.
+        </p>
+        <img class="img-mid" src="../assets/img/finger_paint_1.png"/>
+        <p class="text-tab">The current implementation paints lines much more smoothly. By drawing a circle (with diameter equal to the width of the line) at each of the 'hinges', the kinks are eliminated.
+        </p>
+        <img class="img-mid" src="../assets/img/finger_paint_2.png"/>
+        <p class="text-tab">I have always been interested in graphics and I'm even taking a class on the topic during my upcoming university term. Looking forward to it!
+        </p>
+      </div>
+
+      <div class="span8">
+        <h2>What Not To Do</h2>
+        <p class="text-tab">I don't plan on going back and fixing anything in this app because I think it shows what I've learned since then. However, I would like to comment on what is wrong in the code.
+        </p>
+        <p class="text-tab">The entire list of points redraws every time a new point is added. This is very inefficient and the effects of this decision can definitely be felt as the app slows down when more points are drawn. A better choice would be to just draw the newest point and only redraw everything if something large happens that would affect the existing points, like changing the background.
+        </p>
+        <p class="text-tab">I also don't really like how I implemented the options system. The menu is only shown when the user clicks on the hardware menu button that Android phones have. I think it would have been worth the screen real estate that the menu would take up to make the feature more discoverable.
+        </p>
+        <p class="text-tab">Once again, all of the code can be found on my <a href="http://github.com/nikt">github</a> if you feel like checking the rest of it out.
+        </p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+    <script src="../assets/google-code-prettify/run_prettify.js"></script>
+
+  </body>
+</html>
